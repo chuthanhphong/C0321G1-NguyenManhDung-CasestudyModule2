@@ -47,7 +47,7 @@ public class Main {
                         System.out.println("Please choose function in the MENU");
                 }
             } catch (NumberFormatException e) {
-                System.err.println("Invalid input! Please type A NUMBER!");
+                System.err.println("\nInvalid input! Please type A NUMBER!\n");
             }
         } while (true);
     }

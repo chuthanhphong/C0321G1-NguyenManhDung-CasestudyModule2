@@ -1,3 +1,5 @@
-House 1|Nhà cho thuê 1|60.0|3000000.0|10|tháng|1|loại 3|Đầy đủ|2
-House 2|Nhà cho thuê 2|55.0|3000000.0|10|tháng|1|loại 2|Đầy đủ|2
-House 3|Nhà cho thuê 1|50.0|2600000.0|10|tháng|1|loại 3|Đầy đủ|2
+SVHO-0001|House service1|40.0|3000000.0|8|tháng|1|Type 1|Đầy đủ|2
+SVHO-0002|House service1|55.0|3200000.0|8|tháng|2|Type 2|Đầy đủ|2
+SVHO-0003|House service2|60.0|3500000.0|8|ngày|3|Type 1|Đầy đủ|1
+SVHO-0004|House service2|50.0|3200000.0|8|tháng|1|Type 3|Đầy đủ|2
+SVHO-0005|House service1|45.0|2600000.0|8|tháng|1|Type 1|Đầy đủ|2
