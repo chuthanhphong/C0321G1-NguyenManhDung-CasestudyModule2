@@ -50,7 +50,18 @@ public class ManagerCustomer {
                 System.out.println("---LỖI: Id Card phải có 9 chữ số và theo định dạng XXX XXX XXX");
                 continue;
             }
-            break;
+            List<Customer> list = writeReadFile.readCustomersFile();
+            boolean isContinue = false;
+            for (Customer customer:list){
+                if (customer.getId().equals(id)){
+                    System.out.println("---LỖI: Id Card đã tồn tại");
+                    isContinue = true;
+                    break;
+                }
+            }
+            if (!isContinue) {
+                break;
+            }
         } while (true);
         do {
             System.out.print("\t\tPhone Number: ");
