@@ -1,6 +1,7 @@
 package common;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class ValidateCustomer {
@@ -12,24 +13,52 @@ public class ValidateCustomer {
     public boolean validateDateOfBirth(String str) {
         String formatDOB = "^[0-9]{2}/[0-9]{2}/[0-9]{4}$";
         if (!Pattern.matches(formatDOB, str)) {
+            System.out.println("---LỖI: Sai định dạng dd/mm/yyyy---");
             return false;
         }
+        int yearDOB = Integer.parseInt(str.substring(6, 10)); //năm sinh
+        int monthDOB = Integer.parseInt(str.substring(3, 5)); //tháng sinh
+        int dayDOB = Integer.parseInt(str.substring(0, 2));   //ngày sinh
+        //tháng sinh < 0 || tháng sinh > 12
+        if (monthDOB < 0 || monthDOB > 12){
+            return false;
+        }
+        //kiểm tra tháng 2
+        if (monthDOB == 2 && (dayDOB < 1 || dayDOB > 29)){
+            System.out.println("---LỖI: Tháng " + monthDOB + " chỉ có nhiều nhất 29 ngày---");
+            return false;
+        }
+        //tháng có 31 ngày
+        if (monthDOB == 1 ||monthDOB == 3 || monthDOB == 5 ||monthDOB == 7 ||monthDOB == 8 ||monthDOB == 10 ||monthDOB == 12){
+            if (dayDOB < 1 || dayDOB > 31){
+                System.out.println("---LỖI: Tháng " + monthDOB + " chỉ có 31 ngày---");
+                return false;
+            }
+        }
+        //tháng 30 ngày
+        if (monthDOB == 4 ||monthDOB == 6 || monthDOB == 9 ||monthDOB == 11){
+            if (dayDOB < 1 || dayDOB > 30){
+                System.out.println("---LỖI: Tháng " + monthDOB + " chỉ có 30 ngày---");
+                return false;
+            }
+        }
         String time = String.valueOf(LocalDate.now());
-        int yearNow = Integer.parseInt(time.substring(0, 4));
-        int monthNow = Integer.parseInt(time.substring(5, 7));
-        int dayNow = Integer.parseInt(time.substring(8, 10));
-        int yearDOB = Integer.parseInt(str.substring(6, 10));
+        int yearNow = Integer.parseInt(time.substring(0, 4)); //năm hiện tại
+        int monthNow = Integer.parseInt(time.substring(5, 7)); //tháng hiện tại
+        int dayNow = Integer.parseInt(time.substring(8, 10)); //ngày hiện tại
+
         if (yearNow - yearDOB < 18 || yearDOB < 1900) {
+            System.out.println("---LỖI: Năm sinh phải >1900 và nhỏ hơn năm hiện tại 18 năm---");
             return false;
         }
         if (yearNow - yearDOB == 18) {
-            int monthDOB = Integer.parseInt(str.substring(3, 5));
             if (monthDOB > monthNow) {
+                System.out.println("---LỖI: Năm sinh phải >1900 và nhỏ hơn năm hiện tại 18 năm---");
                 return false;
             }
             if (monthDOB == monthNow) {
-                int dayDOB = Integer.parseInt(str.substring(0, 2));
                 if (dayDOB > dayNow) {
+                    System.out.println("---LỖI: Năm sinh phải >1900 và nhỏ hơn năm hiện tại 18 năm---");
                     return false;
                 }
             }

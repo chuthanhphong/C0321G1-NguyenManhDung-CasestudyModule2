@@ -29,7 +29,6 @@ public class ManagerCustomer {
             System.out.print("\t\tDate of Birth (dd/mm/YYYY): ");
             dateOfBirth = sc.nextLine().trim();
             if (!validateCustomer.validateDateOfBirth(dateOfBirth)) {
-                System.out.println("---LỖI: Năm sinh phải >1900 và nhỏ hơn năm hiện tại 18 năm, đúng định dạng dd/mm/yyyy---");
                 continue;
             }
             break;
