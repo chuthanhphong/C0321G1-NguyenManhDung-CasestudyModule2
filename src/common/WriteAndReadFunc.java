@@ -3,8 +3,11 @@ package common;
 import model.*;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WriteAndReadFunc<E> {
 
@@ -21,7 +24,7 @@ public class WriteAndReadFunc<E> {
             } else if (object instanceof Customer) {
                 path = "src/data/customers.csv";
             } else {
-                System.out.println("Đối tượng phải là kiểu Villa, House, Room hoặc Customer");
+                System.err.println("Đối tượng phải là kiểu Villa, House, Room hoặc Customer");
                 return;
             }
             //ghi vào file
@@ -29,9 +32,27 @@ public class WriteAndReadFunc<E> {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(object.toString() + "\n");
             bufferedWriter.close();
-            System.out.println("Added to file successfully!");
+            System.out.println("\n---Thêm vào file thành công!---");
         } catch (FileNotFoundException fileNotFoundException) {
-            System.err.println("File doesn't exist!!!");
+            System.err.println("File không tồn tại!!!");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public void writeToCSVFile(List<Customer> list){
+        try {
+            String path = "src/data/customers.csv";
+            //ghi vào file
+            FileWriter fileWriter = new FileWriter(path, false);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for (Customer object: list) {
+                bufferedWriter.write(object.toString() + "\n");
+            }
+            bufferedWriter.close();
+            System.out.println("\n---Thêm vào file thành công!---");
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.err.println("File không tồn tại!!!");
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -44,7 +65,6 @@ public class WriteAndReadFunc<E> {
                 List<Villa> list = readVillasFile();
                 for (Villa o : list) {
                     if (o.getId().equals(id)) {
-                        System.err.println("\nID đã tồn tại!\n");
                         return true;
                     }
                 }
@@ -54,7 +74,6 @@ public class WriteAndReadFunc<E> {
                 List<House> list = readHousesFile();
                 for (House o : list) {
                     if (o.getId().equals(id)) {
-                        System.err.println("\nID đã tồn tại!\n");
                         return true;
                     }
                 }
@@ -64,18 +83,20 @@ public class WriteAndReadFunc<E> {
                 List<Room> list = readRoomsFile();
                 for (Room o : list) {
                     if (o.getId().equals(id)) {
-                        System.err.println("\nID đã tồn tại!\n");
                         return true;
                     }
                 }
                 break;
             }
             case "customers.csv": {
-
+                List<Customer> list = readCustomersFile();
+                for (Customer o : list) {
+                    if (o.getId().equals(id)) {
+                        return true;
+                    }
+                }
+                break;
             }
-            default:
-                System.err.println("\nTên File không tồn tại!\n");
-                return true;
         }
         return false;
     }
@@ -90,16 +111,18 @@ public class WriteAndReadFunc<E> {
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
                 String[] words = line.split("\\|");
-                String id = words[words.length - 1];
-                Services serviceUsing = (Services) searchServiceById(id);
-                list.add(new Customer(words[0],words[1],words[2],words[3],words[4],words[5],words[6],words[7],serviceUsing));
+                if (words[8].equals("null")) {
+                    list.add(new Customer(words[0], words[1], words[2], words[3], words[4], words[5], words[6], words[7]));
+                }else {
+                    Services services = searchServiceById(words[8]);
+                    list.add(new Customer(words[0], words[1], words[2], words[3], words[4], words[5], words[6], words[7], services));
+                }
             }
-        } catch (
-                FileNotFoundException e) {
-            System.err.println("\nFile is not founded!!!\n");
-        } catch (
-                Exception e) {
-            System.err.println("\nData of file is not correct!!!\n");
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Không tìm thấy file!!!");
+        } catch (Exception e) {
+            System.err.println("Dữ liệu file không khả dụng!!!");
         }
         return list;
     }
@@ -116,10 +139,11 @@ public class WriteAndReadFunc<E> {
                 String[] words = line.split("\\|");
                 list.add(new Villa(words[0], words[1], Float.parseFloat(words[2]), Float.parseFloat(words[3]), Integer.parseInt(words[4]), words[5], Integer.parseInt(words[6]), words[7], words[8], Float.parseFloat(words[9]), Integer.parseInt(words[10])));
             }
+            bufferedReader.close();
         } catch (FileNotFoundException e) {
-            System.err.println("\nFile is not founded!!!\n");
+            System.err.println("Không tìm thấy file!!!");
         } catch (Exception e) {
-            System.err.println("\nData of file is not correct!!!\n");
+            System.err.println("Dữ liệu file không khả dụng!!!");
         }
         return list;
     }
@@ -136,10 +160,11 @@ public class WriteAndReadFunc<E> {
                 String[] words = line.split("\\|");
                 list.add(new House(words[0], words[1], Float.parseFloat(words[2]), Float.parseFloat(words[3]), Integer.parseInt(words[4]), words[5], Integer.parseInt(words[6]), words[7], words[8], Integer.parseInt(words[9])));
             }
+            bufferedReader.close();
         } catch (FileNotFoundException e) {
-            System.err.println("\nFile is not founded!!!\n");
+            System.err.println("File is not founded!!!");
         } catch (Exception e) {
-            System.err.println("\nData of file is not correct!!!\n");
+            System.err.println("Data of file is not correct!!!");
         }
         return list;
     }
@@ -156,22 +181,23 @@ public class WriteAndReadFunc<E> {
                 String[] words = line.split("\\|");
                 list.add(new Room(words[0], words[1], Float.parseFloat(words[2]), Float.parseFloat(words[3]), Integer.parseInt(words[4]), words[5], Integer.parseInt(words[6]), words[7], Integer.parseInt(words[8]), Float.parseFloat(words[9])));
             }
+            bufferedReader.close();
         } catch (FileNotFoundException e) {
-            System.err.println("\nFile is not founded!!!\n");
+            System.err.println("Không tìm thấy file!!!");
         } catch (Exception e) {
-            System.err.println("\nData of file is not correct!!!\n");
+            System.err.println("Dữ liệu file không khả dụng!!!");
         }
         return list;
     }
 
     //search by ID
-    public E searchServiceById(String id) {
+    public Services searchServiceById(String id) {
         String typeOfService = id.substring(0, 4);
         if (typeOfService.equals("SVVL")) {
             List<Villa> list = readVillasFile();
             for (Villa villa : list) {
                 if (villa.getId().equals(id)) {
-                    return (E) villa;
+                    return villa;
                 }
             }
             return null;
@@ -179,7 +205,7 @@ public class WriteAndReadFunc<E> {
             List<House> list = readHousesFile();
             for (House house : list) {
                 if (house.getId().equals(id)) {
-                    return (E) house;
+                    return house;
                 }
             }
             return null;
@@ -187,7 +213,7 @@ public class WriteAndReadFunc<E> {
             List<Room> list = readRoomsFile();
             for (Room room : list) {
                 if (room.getId().equals(id)) {
-                    return (E) room;
+                    return room;
                 }
             }
             return null;
@@ -195,5 +221,38 @@ public class WriteAndReadFunc<E> {
             System.out.println("---LỖI: ID tìm kiếm không hợp lệ---");
             return null;
         }
+    }
+
+    public void writeBookingCsv(String idService, String idCustomer) {
+        final String PATH = "src/data/booking.csv";
+        try {
+            FileWriter fileWriter = new FileWriter(PATH,true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write(idService + "|" + idCustomer + "\n");
+            bufferedWriter.close();
+            System.out.println("\n---Đặt phòng thành công!---\n");
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+    public Map<String, String> readBookingCsv() {
+        final String PATH = "src/data/booking.csv";
+        Map<String, String> map = new LinkedHashMap<>();
+        try {
+            FileReader fileReader = new FileReader(PATH);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = "";
+            while((line = bufferedReader.readLine()) != null){
+                String[] words = line.split("\\|");
+                map.put(words[0], words[1]);
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.err.println("---Không tìm thấy file!---");
+        } catch (IOException ioException) {
+            System.err.println("---Lỗi đọc file!---");
+        }
+        return map;
     }
 }

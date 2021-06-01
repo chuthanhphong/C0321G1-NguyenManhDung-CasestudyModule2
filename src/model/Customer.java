@@ -7,9 +7,21 @@ public class Customer {
     private String id;                 //số CMND
     private String phoneNumber;        //số điện thoại
     private String email;           //email
-    private String typeCustomer;    //loại khách
+    private String typeCustomer;    //loại khách: Diamond, Platinium, Gold, Silver, Member
     private String address;         //địa chỉ
     private Services serviceUsing;  //dịch vụ sử dụng
+
+    public Customer(String name, String dateOfBirth, String gender, String id, String phoneNumber, String email, String typeCustomer, String address) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.id = id;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.typeCustomer = typeCustomer;
+        this.address = address;
+        this.serviceUsing = null;
+    }
 
     public Customer(String name, String dateOfBirth, String gender, String id, String phoneNumber, String email, String typeCustomer, String address, Services serviceUsing) {
         this.name = name;
@@ -97,7 +109,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return        name +
+        return name +
                 "|" + dateOfBirth +
                 "|" + gender +
                 "|" + id +
@@ -105,7 +117,7 @@ public class Customer {
                 "|" + email +
                 "|" + typeCustomer +
                 "|" + address +
-                "|" + serviceUsing.getId();
+                "|" + (this.serviceUsing == null ? "null" : this.serviceUsing.getId());
     }
 
     public void showInfo() {
@@ -115,26 +127,30 @@ public class Customer {
                 ", số CMND: " + this.id +
                 ", số ĐT: " + this.phoneNumber +
                 ", email: " + this.email +
-                ", loại KH: " + this.typeCustomer +
                 ", địa chỉ: " + this.address +
-                "\n Đang sử dụng dịch vụ:");
-        this.serviceUsing.showInfo();
+                ",\n\tloại KH: " + this.typeCustomer);
+        if (this.serviceUsing == null) {
+            System.out.println("\tHiện tại chưa sử dụng bất cứ dịch vụ nào");
+        } else {
+            System.out.println("\tDịch vụ đang sử dụng:");
+            this.serviceUsing.showInfo();
+        }
     }
 
-    public int compareDateOfBirthAcsending(Customer customer){
+    public int compareDateOfBirthAcsending(Customer customer) {
         //dd/mm/yyyy
-        int thisYear = Integer.parseInt(this.dateOfBirth.substring(6,10));
-        int customerYear = Integer.parseInt(customer.getDateOfBirth().substring(6,10));
+        int thisYear = Integer.parseInt(this.dateOfBirth.substring(6, 10));
+        int customerYear = Integer.parseInt(customer.getDateOfBirth().substring(6, 10));
         if (thisYear > customerYear) {
             return 1;
-        }else if (thisYear == customerYear){
-            int thisMonth = Integer.parseInt(this.dateOfBirth.substring(3,5));
-            int customerMonth = Integer.parseInt(customer.getDateOfBirth().substring(3,5));
+        } else if (thisYear == customerYear) {
+            int thisMonth = Integer.parseInt(this.dateOfBirth.substring(3, 5));
+            int customerMonth = Integer.parseInt(customer.getDateOfBirth().substring(3, 5));
             if (thisMonth > customerMonth) {
                 return 1;
-            }else if (thisMonth == customerMonth){
-                int thisDay = Integer.parseInt(this.dateOfBirth.substring(0,2));
-                int customerDay = Integer.parseInt(customer.getDateOfBirth().substring(0,2));
+            } else if (thisMonth == customerMonth) {
+                int thisDay = Integer.parseInt(this.dateOfBirth.substring(0, 2));
+                int customerDay = Integer.parseInt(customer.getDateOfBirth().substring(0, 2));
                 if (thisDay > customerDay) {
                     return 1;
                 }
@@ -142,4 +158,6 @@ public class Customer {
         }
         return -1;
     }
+
+
 }

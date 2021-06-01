@@ -36,7 +36,7 @@ public class Main {
                         MainController.showCustomers();
                         break;
                     case ADD_BOOKING:
-
+                        MainController.addNewBooking();
                         break;
                     case SHOW_EMPLOYEE:
 
@@ -44,10 +44,10 @@ public class Main {
                     case EXIT:
                         System.exit(1);
                     default:
-                        System.out.println("Please choose function in the MENU");
+                        System.err.println("Please choose function in the MENU");
                 }
-            } catch (NumberFormatException e) {
-                System.err.println("\nInvalid input! Please type A NUMBER!\n");
+            } catch (NumberFormatException | InterruptedException e) {
+                System.err.println("Invalid input! Please type A NUMBER!");
             }
         } while (true);
     }

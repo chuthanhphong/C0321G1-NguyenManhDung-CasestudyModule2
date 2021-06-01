@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class ValidateService {
 
     public boolean validateServiceName(String str) {
-        String regexString = "^[A-Z]+[a-z0-9\\s]*$";
+        String regexString = "^\\p{Lu}\\p{Ll}*(\\s\\p{Lu}[\\p{Ll}\\d]*)*(\\s\\d*)*";
         return Pattern.matches(regexString, str);
     }
 
@@ -68,8 +68,8 @@ public class ValidateService {
     }
 
     public boolean validateTypeOfRoom(String str) {
-        String regexString = "^[A-Z]+[a-z0-9\\s]*$";
-        return Pattern.matches(regexString, str);
+        String regex = "^\\p{Lu}\\p{Ll}*(\\s(\\p{Lu}\\p{Ll}*|\\d*))*$";
+        return Pattern.matches(regex, str);
     }
 
 

@@ -1,15 +1,16 @@
 package controller;
 
+import common.WriteAndReadFunc;
 import manager.ManagerCustomer;
 import manager.ManagerService;
-import model.Customer;
+import model.*;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class MainController {
-    static ManagerService service = new ManagerService();
-    static ManagerCustomer customer = new ManagerCustomer();
+    static ManagerService managerService = new ManagerService();
+    static ManagerCustomer managerCustomer = new ManagerCustomer();
 
     //1.Add service 2.Show service 3.Add customer 4.Show customer
     //5.Add booking 6.Show Employee 7.Exit
@@ -80,35 +81,39 @@ public class MainController {
     }
 
     public static void addNewServies() {
-        System.out.println("-----Add New Service-----");
-        System.out.println("\t1. Add New Villa\n" +
-                "\t2. Add New House\n" +
-                "\t3. Add New Room\n" +
-                "\t4. Back to menu\n");
         boolean isAddContinue;
         do {
             try {
+                System.out.println("-----Add New Service-----");
+                System.out.println("\t1. Add New Villa\n" +
+                        "\t2. Add New House\n" +
+                        "\t3. Add New Room\n" +
+                        "\t4. Back to menu\n");
+                Thread.sleep(250);
                 Scanner sc = new Scanner(System.in);
                 int choice = Integer.parseInt(sc.nextLine());
                 switch (choice) {
                     case 1:
-                        service.addVilla();
+                        managerService.addVilla();
+                        isAddContinue = false;
                         break;
                     case 2:
-                        service.addHouse();
+                        managerService.addHouse();
+                        isAddContinue = false;
                         break;
                     case 3:
-                        service.addRoom();
+                        managerService.addRoom();
+                        isAddContinue = false;
                         break;
                     case 4:
-                        displayMainMenu();
+                        isAddContinue = false;
                         break;
                     default:
-                        System.out.println("Please choose function in the MENU!");
+                        System.err.println("Please choose function in the MENU!");
+                        isAddContinue = true;
                         break;
                 }
-                isAddContinue = false;
-            } catch (NumberFormatException numberFormatException) {
+            } catch (NumberFormatException | InterruptedException numberFormatException) {
                 System.err.println("Invalid input! Please type a number!");
                 isAddContinue = true;
             }
@@ -116,46 +121,52 @@ public class MainController {
     }
 
     public static void showServices() {
-        System.out.println("-----Show Services-----");
-        System.out.println( "\t1. Show all Villa\n" +
-                            "\t2. Show all House\n" +
-                            "\t3. Show all Room\n" +
-                            "\t4. Show all Name Villa Not Duplicate\n" +
-                            "\t5. Show all Name House Not Duplicate\n" +
-                            "\t6. Show all Name Name Not Duplicate\n" +
-                            "\t7. Back to menu\n");
         boolean isShowContinue;
         do {
             try {
+                System.out.println("-----Show Services-----");
+                System.out.println("\t1. Show all Villa\n" +
+                        "\t2. Show all House\n" +
+                        "\t3. Show all Room\n" +
+                        "\t4. Show all Name Villa Not Duplicate\n" +
+                        "\t5. Show all Name House Not Duplicate\n" +
+                        "\t6. Show all Name Name Not Duplicate\n" +
+                        "\t7. Back to menu\n");
                 Scanner sc = new Scanner(System.in);
                 int choice = Integer.parseInt(sc.nextLine());
                 switch (choice) {
                     case 1:
-                        service.showAllVillas();
+                        managerService.showAllVillas();
+                        isShowContinue = false;
                         break;
                     case 2:
-                        service.showAllHouses();
+                        managerService.showAllHouses();
+                        isShowContinue = false;
                         break;
                     case 3:
-                        service.showAllRooms();
+                        managerService.showAllRooms();
+                        isShowContinue = false;
                         break;
                     case 4:
-                        service.showVillasNotDuplicateName();
+                        managerService.showVillasNotDuplicateName();
+                        isShowContinue = false;
                         break;
                     case 5:
-                        service.showHousesNotDuplicateName();
+                        managerService.showHousesNotDuplicateName();
+                        isShowContinue = false;
                         break;
                     case 6:
-                        service.showRoomsNotDuplicateName();
+                        managerService.showRoomsNotDuplicateName();
+                        isShowContinue = false;
                         break;
                     case 7:
-                        displayMainMenu();
+                        isShowContinue = false;
                         break;
                     default:
-                        System.out.println("Please choose function in the MENU!");
+                        System.err.println("Please choose function in the MENU!");
+                        isShowContinue = true;
                         break;
                 }
-                isShowContinue = false;
             } catch (NumberFormatException numberFormatException) {
                 System.err.println("Invalid input! Please type a number!");
                 isShowContinue = true;
@@ -163,19 +174,97 @@ public class MainController {
         } while (isShowContinue);
     }
 
-    public static void addNewCustomer(){
+    public static void addNewCustomer() {
         try {
-            customer.addNewCustomer();
-        }catch (Exception e){
+            managerCustomer.addNewCustomer();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void showCustomers(){
-       try {
-           customer.showInforAllCustomer();
-       }catch (Exception e){
-           e.printStackTrace();
-       }
+    public static void showCustomers() {
+        try {
+            managerCustomer.showInforAllCustomer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    public static void addNewBooking() throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+        //Chọn khách hàng
+        System.out.println("-----Customer List-----");
+        int indexOfCustomer; //vị trí của khách hàng trong danh sách hiển thị
+        Customer customer = managerCustomer.selectCustomerFromFile();
+        if (customer == null){
+            return;
+        }
+        //Chọn loại dịch vụ
+        System.out.println("\nChọn loại dịch vụ muốn book: ");
+        System.out.println("\t1. Booking Villa" +
+                "\t2. Booking House" +
+                "\t3. Booking Room");
+        int chooseTypeOfService;
+        do {
+            try {
+                Thread.sleep(250);
+                chooseTypeOfService = Integer.parseInt(sc.nextLine());
+                if (chooseTypeOfService < 1 || chooseTypeOfService > 3) {
+                    System.err.println("---Vui lòng chọn chức năng trong Menu---");
+                    Thread.sleep(250);
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException | InterruptedException e) {
+                System.err.println("---Nhập đúng định dạng là 1 số---");
+            }
+        } while (true);
+
+        //Đặt phòng
+        WriteAndReadFunc writeAndReadFunc = new WriteAndReadFunc();
+        switch (chooseTypeOfService) {
+            case 1:
+                Villa villaBooked = managerService.bookVilla();
+                if (villaBooked == null) {
+                    System.err.println("---Không còn Villa trống để đặt phòng---");
+                    Thread.sleep(250);
+                    return;
+                }
+                writeAndReadFunc.writeBookingCsv(villaBooked.getId(), customer.getId());
+                customer.setServiceUsing(villaBooked);
+                break;
+            case 2:
+                House houseBooked = managerService.bookHouse();
+                if (houseBooked == null) {
+                    System.err.println("---Không còn Villa trống để đặt phòng---");
+                    Thread.sleep(250);
+                    return;
+                }
+                writeAndReadFunc.writeBookingCsv(houseBooked.getId(), customer.getId());
+                customer.setServiceUsing(houseBooked);
+                break;
+            case 3:
+                Room roomBooked = managerService.bookRoom();
+                if (roomBooked == null) {
+                    System.err.println("---Không còn Villa trống để đặt phòng---");
+                    Thread.sleep(250);
+                    return;
+                }
+                writeAndReadFunc.writeBookingCsv(roomBooked.getId(), customer.getId());
+                customer.setServiceUsing(roomBooked);
+                break;
+            default:
+                System.err.println("---Chọn chức năng có trong Menu---");
+        }
+        customer.showInfo();
+        //Ghi đè lại vào file Customer để thay đổi thuộc tính Dịch vụ đang sử dụng
+        List<Customer> list = writeAndReadFunc.readCustomersFile();
+        for (Customer o : list) {
+            if (o.getId().equals(customer.getId())) {
+                list.set(list.indexOf(o), customer);
+            }
+        }
+        writeAndReadFunc.writeToCSVFile(list);
+    }
+
 }

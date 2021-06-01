@@ -17,16 +17,21 @@ public class ManagerService {
         Scanner sc = new Scanner(System.in);
         System.out.println("-----Add New Villa-----");
         try {
+            Thread.sleep(250);
             //id
             String addId;
             do {
                 System.out.print("\tID: ");
+
                 addId = sc.nextLine();
                 if (!validate.validateId(addId, "villa")) {
-                    System.out.println("LỖI: Định dạng ID không hợp lệ\n");
+                    System.err.println("LỖI: Định dạng ID không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 if (writeReadFile.isIdExist(addId, "villas.csv")) {
+                    System.err.println("ID đã tồn tại!");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -37,7 +42,8 @@ public class ManagerService {
                 System.out.print("\tTên dịch vụ: ");
                 addServiceName = sc.nextLine();
                 if (!validate.validateServiceName(addServiceName)) {
-                    System.out.println("LỖI: Định dạng Tên Dịch Vụ không hợp lệ\n");
+                    System.err.println("LỖI: Định dạng Tên Dịch Vụ không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -48,7 +54,8 @@ public class ManagerService {
                 System.out.print("\tDiện tích Villa (m2): ");
                 addArea = Float.parseFloat(sc.nextLine());
                 if (!validate.validateArea(addArea)) {
-                    System.out.println("LỖI: Diện Tích Sử Dụng phải lớn hơn 30\n");
+                    System.err.println("LỖI: Diện Tích Sử Dụng phải lớn hơn 30");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -59,7 +66,8 @@ public class ManagerService {
                 System.out.print("\tSố người tối đa: ");
                 addMaxPeople = Integer.parseInt(sc.nextLine());
                 if (!validate.validateMaxPeople(addMaxPeople)) {
-                    System.out.println("LỖI: Số Người Tối Đa phải lớn hơn 0 và bé hơn 20\n");
+                    System.err.println("LỖI: Số Người Tối Đa phải lớn hơn 0 và bé hơn 20");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -97,7 +105,8 @@ public class ManagerService {
                 System.out.print("\tGiá tiền thuê theo " + addRentType + ": ");
                 addPrice = Float.parseFloat(sc.nextLine());
                 if (!validate.validatePrice(addPrice)) {
-                    System.out.println("LỖI: Giá Tiền không hợp lệ\n");
+                    System.err.println("LỖI: Giá Tiền không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -108,7 +117,8 @@ public class ManagerService {
                 System.out.print("\tLoại phòng: ");
                 addTypeOfRoom = sc.nextLine();
                 if (!validate.validateTypeOfRoom(addTypeOfRoom)) {
-                    System.out.println("LỖI: Loại Phòng không hợp lệ\n");
+                    System.err.println("LỖI: Loại Phòng không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -119,7 +129,8 @@ public class ManagerService {
                 System.out.print("\tDiện tích bể bơi (m2): ");
                 addSwimmingPoolArea = Float.parseFloat(sc.nextLine());
                 if (!validate.validateSwimmingPool(addSwimmingPoolArea)) {
-                    System.out.println("LỖI: Diện Tích Bể Bơi không hợp lệ\n");
+                    System.err.println("LỖI: Diện Tích Bể Bơi không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -130,7 +141,8 @@ public class ManagerService {
                 System.out.print("\tSố tầng: ");
                 addFloors = Integer.parseInt(sc.nextLine());
                 if (!validate.validateFloors(addFloors)) {
-                    System.out.println("LỖI: Số Tầng không hợp lệ\n");
+                    System.err.println("LỖI: Số Tầng không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -140,8 +152,8 @@ public class ManagerService {
 
             Villa addVilla = new Villa(addId, addServiceName, addArea, addPrice, addMaxPeople, addRentType, addRentTime, addTypeOfRoom, addUtilityDescription, addSwimmingPoolArea, addFloors);
             writeReadFile.writeToCSVFile(addVilla);
-        } catch (NumberFormatException numberFormatException) {
-            System.out.println("LỖI: Kiểm tra định dạng nhập vào!\n");
+        } catch (NumberFormatException | InterruptedException numberFormatException) {
+            System.err.println("LỖI: Kiểm tra định dạng nhập vào!");
         }
     }
 
@@ -150,16 +162,20 @@ public class ManagerService {
         Scanner sc = new Scanner(System.in);
         System.out.println("-----Add New House-----");
         try {
+            Thread.sleep(250);
             //id
             String addId;
             do {
                 System.out.print("\tID: ");
                 addId = sc.nextLine();
                 if (!validate.validateId(addId, "house")) {
-                    System.out.println("LỖI: Định dạng ID không hợp lệ\n");
+                    System.err.println("LỖI: Định dạng ID không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 if (writeReadFile.isIdExist(addId, "villas.csv")) {
+                    System.err.println("ID đã tồn tại");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -170,7 +186,8 @@ public class ManagerService {
                 System.out.print("\tTên dịch vụ: ");
                 addServiceName = sc.nextLine();
                 if (!validate.validateServiceName(addServiceName)) {
-                    System.out.println("LỖI: Định dạng Tên Dịch Vụ không hợp lệ\n");
+                    System.err.println("LỖI: Định dạng Tên Dịch Vụ không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -181,8 +198,8 @@ public class ManagerService {
                 System.out.print("\tDiện tích Villa (m2): ");
                 addArea = Float.parseFloat(sc.nextLine());
                 if (!validate.validateArea(addArea)) {
-                    System.out.println("LỖI: Diện Tích Sử Dụng phải lớn hơn 30\n");
-
+                    System.err.println("LỖI: Diện Tích Sử Dụng phải lớn hơn 30");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -193,8 +210,8 @@ public class ManagerService {
                 System.out.print("\tSố người tối đa: ");
                 addMaxPeople = Integer.parseInt(sc.nextLine());
                 if (!validate.validateMaxPeople(addMaxPeople)) {
-                    System.out.println("LỖI: Số Người Tối Đa phải lớn hơn 0 và bé hơn 20\n");
-
+                    System.err.println("LỖI: Số Người Tối Đa phải lớn hơn 0 và bé hơn 20");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -232,7 +249,8 @@ public class ManagerService {
                 System.out.print("\tGiá tiền thuê theo " + addRentType + ": ");
                 addPrice = Float.parseFloat(sc.nextLine());
                 if (!validate.validatePrice(addPrice)) {
-                    System.out.println("LỖI: Giá Tiền không hợp lệ\n");
+                    System.err.println("LỖI: Giá Tiền không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -243,7 +261,8 @@ public class ManagerService {
                 System.out.print("\tLoại phòng: ");
                 addTypeOfRoom = sc.nextLine();
                 if (!validate.validateTypeOfRoom(addTypeOfRoom)) {
-                    System.out.println("LỖI: Loại Phòng không hợp lệ\n");
+                    System.err.println("LỖI: Loại Phòng không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -254,7 +273,8 @@ public class ManagerService {
                 System.out.print("\tSố tầng: ");
                 addFloors = Integer.parseInt(sc.nextLine());
                 if (!validate.validateFloors(addFloors)) {
-                    System.out.println("LỖI: Số Tầng không hợp lệ\n");
+                    System.err.println("LỖI: Số Tầng không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -264,8 +284,8 @@ public class ManagerService {
 
             House addHouse = new House(addId, addServiceName, addArea, addPrice, addMaxPeople, addRentType, addRentTime, addTypeOfRoom, addUtilityDescription, addFloors);
             writeReadFile.writeToCSVFile(addHouse);
-        } catch (NumberFormatException numberFormatException) {
-            System.out.println("LỖI: Kiểm tra định dạng nhập vào!\n");
+        } catch (NumberFormatException | InterruptedException numberFormatException) {
+            System.err.println("LỖI: Kiểm tra định dạng nhập vào!");
         }
     }
 
@@ -274,16 +294,20 @@ public class ManagerService {
         Scanner sc = new Scanner(System.in);
         System.out.println("-----Add New Room-----");
         try {
+            Thread.sleep(250);
             //id
             String addId;
             do {
                 System.out.print("\tID: ");
                 addId = sc.nextLine();
                 if (!validate.validateId(addId, "room")) {
-                    System.out.println("LỖI: Định dạng ID không hợp lệ\n");
+                    System.err.println("LỖI: Định dạng ID không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 if (writeReadFile.isIdExist(addId, "villas.csv")) {
+                    System.err.println("ID đã tồn tại");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -294,7 +318,8 @@ public class ManagerService {
                 System.out.print("\tTên dịch vụ: ");
                 addServiceName = sc.nextLine();
                 if (!validate.validateServiceName(addServiceName)) {
-                    System.out.println("LỖI: Định dạng Tên Dịch Vụ không hợp lệ\n");
+                    System.err.println("LỖI: Định dạng Tên Dịch Vụ không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -305,8 +330,8 @@ public class ManagerService {
                 System.out.print("\tDiện tích Villa (m2): ");
                 addArea = Float.parseFloat(sc.nextLine());
                 if (!validate.validateArea(addArea)) {
-                    System.out.println("LỖI: Diện Tích Sử Dụng phải lớn hơn 30\n");
-
+                    System.err.println("LỖI: Diện Tích Sử Dụng phải lớn hơn 30");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -317,7 +342,8 @@ public class ManagerService {
                 System.out.print("\tSố người tối đa: ");
                 addMaxPeople = Integer.parseInt(sc.nextLine());
                 if (!validate.validateMaxPeople(addMaxPeople)) {
-                    System.out.println("LỖI: Số Người Tối Đa phải lớn hơn 0 và bé hơn 20\n");
+                    System.err.println("LỖI: Số Người Tối Đa phải lớn hơn 0 và bé hơn 20");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -355,7 +381,8 @@ public class ManagerService {
                 System.out.print("\tGiá tiền thuê theo " + addRentType + ": ");
                 addPrice = Float.parseFloat(sc.nextLine());
                 if (!validate.validatePrice(addPrice)) {
-                    System.out.println("LỖI: Giá Tiền không hợp lệ\n");
+                    System.err.println("LỖI: Giá Tiền không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -366,7 +393,8 @@ public class ManagerService {
                 System.out.print("\tDịch vụ đi kèm: ");
                 addEnclosedService = sc.nextLine();
                 if (!validate.validateEnclosedService(addEnclosedService)) {
-                    System.out.println("LỖI: Dịch Vụ Đi Kèm không hợp lệ\n");
+                    System.err.println("LỖI: Dịch Vụ Đi Kèm không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -377,7 +405,8 @@ public class ManagerService {
                 System.out.print("\tSố lượng: ");
                 addAmountService = Integer.parseInt(sc.nextLine());
                 if (!validate.validateAmountService(addAmountService)) {
-                    System.out.println("LỖI: Số Lượng Dịch Vụ Đi Kèm không hợp lệ\n");
+                    System.err.println("LỖI: Số Lượng Dịch Vụ Đi Kèm không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -385,10 +414,11 @@ public class ManagerService {
             //priceServiceRoom
             float addPriceService;
             do {
-                System.out.print("Giá tiền dịch vụ phòng: ");
+                System.out.print("\tGiá tiền dịch vụ phòng: ");
                 addPriceService = Float.parseFloat(sc.nextLine());
                 if (!validate.validatePrice(addPriceService)) {
-                    System.out.println("LỖI: Giá Tiền Dịch Vụ Phòng không hợp lệ\n");
+                    System.err.println("LỖI: Giá Tiền Dịch Vụ Phòng không hợp lệ");
+                    Thread.sleep(250);
                     continue;
                 }
                 break;
@@ -396,13 +426,13 @@ public class ManagerService {
 
             Room addRoom = new Room(addId, addServiceName, addArea, addPrice, addMaxPeople, addRentType, addRentTime, addEnclosedService, addAmountService, addPriceService);
             writeReadFile.writeToCSVFile(addRoom);
-        } catch (NumberFormatException numberFormatException) {
-            System.out.println("LỖI: Kiểm tra định dạng nhập vào!\n");
+        } catch (NumberFormatException | InterruptedException numberFormatException) {
+            System.err.println("LỖI: Kiểm tra định dạng nhập vào!");
         }
     }
 
     //Show all Villas
-    public void showAllVillas() {
+    public List<Villa> showAllVillas() {
         System.out.println("-------Villas-------");
         List<Villa> list = writeReadFile.readVillasFile();
         int i = 1;
@@ -410,10 +440,11 @@ public class ManagerService {
             System.out.print(i++ + ".\t");
             o.showInfo();
         }
+        return list;
     }
 
     //Show all Houses
-    public void showAllHouses() {
+    public List<House> showAllHouses() {
         System.out.println("-------Houses-------");
         List<House> list = writeReadFile.readHousesFile();
         int i = 1;
@@ -421,10 +452,11 @@ public class ManagerService {
             System.out.print(i++ + ".\t");
             o.showInfo();
         }
+        return list;
     }
 
     //Show all Rooms
-    public void showAllRooms() {
+    public List<Room> showAllRooms() {
         System.out.println("-------Rooms-------");
         List<Room> list = writeReadFile.readRoomsFile();
         int i = 1;
@@ -432,6 +464,7 @@ public class ManagerService {
             System.out.print(i++ + ".\t");
             o.showInfo();
         }
+        return list;
     }
 
     //Show all Name Villa Not Duplicate
@@ -477,5 +510,119 @@ public class ManagerService {
                 o.showInfo();
             }
         }
+    }
+
+    public Villa bookVilla() {
+        Scanner sc = new Scanner(System.in);
+        int indexOfService; //vị trí của service muốn book trong danh sách hiển thị
+        List<Villa> serviceList = showVillaToBook();
+        if (serviceList.size() == 0) return null;
+        do {
+            try {
+                Thread.sleep(250);
+                System.out.println("Chọn Villa để đặt phòng: ");
+                indexOfService = Integer.parseInt(sc.nextLine());
+                if (indexOfService <= 0 || indexOfService > serviceList.size()) {
+                    System.err.println("---Chọn Villa có trong danh sách---");
+                    Thread.sleep(250);
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException | InterruptedException e) {
+                System.err.println("---Nhập đúng định dạng là 1 số---");
+            }
+        } while (true);
+        return serviceList.get(indexOfService - 1);
+    }
+
+    public House bookHouse(){
+        Scanner sc = new Scanner(System.in);
+        int indexOfService; //vị trí của service muốn book trong danh sách hiển thị
+        List<House> serviceList = showHouseToBook();
+        if (serviceList.size() == 0) return null;
+        do {
+            try {
+                Thread.sleep(250);
+                System.out.println("Chọn House để đặt phòng: ");
+                indexOfService = Integer.parseInt(sc.nextLine());
+                if (indexOfService <= 0 || indexOfService > serviceList.size()) {
+                    System.err.println("---Chọn House có trong danh sách---");
+                    Thread.sleep(250);
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException | InterruptedException e) {
+                System.err.println("---Nhập đúng định dạng là 1 số---");
+            }
+        } while (true);
+        return serviceList.get(indexOfService - 1);
+    }
+
+    public Room bookRoom(){
+        Scanner sc = new Scanner(System.in);
+        int indexOfService; //vị trí của service muốn book trong danh sách hiển thị
+        List<Room> serviceList = showRoomToBook();
+        if (serviceList.size() == 0) return null;
+        do {
+            try {
+                Thread.sleep(250);
+                System.out.println("Chọn Room để đặt phòng: ");
+                indexOfService = Integer.parseInt(sc.nextLine());
+                if (indexOfService <= 0 || indexOfService > serviceList.size()) {
+                    System.err.println("---Chọn Room có trong danh sách---");
+                    Thread.sleep(250);
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException | InterruptedException e) {
+                System.err.println("---Nhập đúng định dạng là 1 số---");
+            }
+        } while (true);
+        return serviceList.get(indexOfService - 1);
+    }
+
+    public List<Villa> showVillaToBook(){
+        System.out.println("---Danh sách Villas khả dụng---");
+        //Map lưu trữ id dịch vụ và id người dùng đã đặt phòng
+        Map map = writeReadFile.readBookingCsv();
+        List<Villa> list = writeReadFile.readVillasFile();
+        list.removeIf(o -> map.containsKey(o.getId()));
+
+        int i = 1;
+        for (Villa o : list) {
+            System.out.print(i++ + ".\t");
+            o.showInfo();
+        }
+        return list;
+    }
+
+    public List<House> showHouseToBook(){
+        System.out.println("---Danh sách Houses khả dụng---");
+        //Map lưu trữ id dịch vụ và id người dùng đã đặt phòng
+        Map map = writeReadFile.readBookingCsv();
+        List<House> list = writeReadFile.readHousesFile();
+        list.removeIf(o -> map.containsKey(o.getId()));
+
+        int i = 1;
+        for (House o : list) {
+            System.out.print(i++ + ".\t");
+            o.showInfo();
+        }
+        return list;
+    }
+
+    public List<Room> showRoomToBook(){
+        System.out.println("---Danh sách Rooms khả dụng---");
+        //Map lưu trữ id dịch vụ và id người dùng đã đặt phòng
+        Map map = writeReadFile.readBookingCsv();
+        List<Room> list = writeReadFile.readRoomsFile();
+        list.removeIf(o -> map.containsKey(o.getId()));
+
+        int i = 1;
+        for (Room o : list) {
+            System.out.print(i++ + ".\t");
+            o.showInfo();
+        }
+        return list;
     }
 }
