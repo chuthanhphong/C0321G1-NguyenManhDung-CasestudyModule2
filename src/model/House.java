@@ -41,14 +41,14 @@ public class House extends Services {
 
     @Override
     public void showInfo() {
-        String str = "ID: " + super.getId()
+        String str = "\tID: " + super.getId()
                 + ",\tloại dịch vụ thuê: " + super.getServiceName()
                 + ",\tdiện tích sử dụng = " + super.getArea() + "m2"
                 + ",\tchi phí thuê = " + super.getPrice() + "/h"
                 + ",\tsố người tối đa = " + super.getMaxPeople()
-                + ",\tkiểu thuê = '" + super.getRentType() + "'"
+                + "\n\tkiểu thuê = '" + super.getRentType() + "'"
                 + ",\tthời gian thuê = " + super.getRentTime() + " " + super.getRentType()
-                + "\n\ttiêu chuẩn phòng: " + this.getTypeOfRoom()
+                + ",\ttiêu chuẩn phòng: " + this.getTypeOfRoom()
                 + ",\tcác tiện ích khác: " + this.getUtilityDescription()
                 + ",\tsố tầng: " + this.getFloors();
         System.out.println(str);

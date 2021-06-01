@@ -1,11 +1,15 @@
 package controller;
 
+import manager.ManagerCustomer;
 import manager.ManagerService;
+import model.Customer;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MainController {
-    static ManagerService managerService = new ManagerService();
+    static ManagerService service = new ManagerService();
+    static ManagerCustomer customer = new ManagerCustomer();
 
     //1.Add service 2.Show service 3.Add customer 4.Show customer
     //5.Add booking 6.Show Employee 7.Exit
@@ -88,13 +92,13 @@ public class MainController {
                 int choice = Integer.parseInt(sc.nextLine());
                 switch (choice) {
                     case 1:
-                        managerService.addVilla();
+                        service.addVilla();
                         break;
                     case 2:
-                        managerService.addHouse();
+                        service.addHouse();
                         break;
                     case 3:
-                        managerService.addRoom();
+                        service.addRoom();
                         break;
                     case 4:
                         displayMainMenu();
@@ -127,22 +131,22 @@ public class MainController {
                 int choice = Integer.parseInt(sc.nextLine());
                 switch (choice) {
                     case 1:
-                        managerService.showAllVillas();
+                        service.showAllVillas();
                         break;
                     case 2:
-                        managerService.showAllHouses();
+                        service.showAllHouses();
                         break;
                     case 3:
-                        managerService.showAllRooms();
+                        service.showAllRooms();
                         break;
                     case 4:
-                        managerService.showVillasNotDuplicateName();
+                        service.showVillasNotDuplicateName();
                         break;
                     case 5:
-                        managerService.showHousesNotDuplicateName();
+                        service.showHousesNotDuplicateName();
                         break;
                     case 6:
-                        managerService.showRoomsNotDuplicateName();
+                        service.showRoomsNotDuplicateName();
                         break;
                     case 7:
                         displayMainMenu();
@@ -159,4 +163,19 @@ public class MainController {
         } while (isShowContinue);
     }
 
+    public static void addNewCustomer(){
+        try {
+            customer.addNewCustomer();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void showCustomers(){
+       try {
+           customer.showInforAllCustomer();
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+    }
 }

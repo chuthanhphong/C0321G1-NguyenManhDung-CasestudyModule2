@@ -30,10 +30,10 @@ public class Main {
                         MainController.showServices();
                         break;
                     case ADD_CUSTOMER:
-
+                        MainController.addNewCustomer();
                         break;
                     case SHOW_CUSTOMER:
-
+                        MainController.showCustomers();
                         break;
                     case ADD_BOOKING:
 

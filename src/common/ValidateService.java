@@ -3,7 +3,7 @@ package common;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
-public class Validate {
+public class ValidateService {
 
     public boolean validateServiceName(String str) {
         String regexString = "^[A-Z]+[a-z0-9\\s]*$";
@@ -72,31 +72,5 @@ public class Validate {
         return Pattern.matches(regexString, str);
     }
 
-    public boolean validateDateOfBirth(String str) {
-        String formatDOB = "^[0-9]{2}/[0-9]{2}/[0-9]{4}$";
-        if (!Pattern.matches(formatDOB, str)) {
-            return false;
-        }
-        String time = String.valueOf(LocalDate.now());
-        int yearNow = Integer.parseInt(time.substring(0, 4));
-        int monthNow = Integer.parseInt(time.substring(5, 7));
-        int dayNow = Integer.parseInt(time.substring(8, 10));
-        int yearDOB = Integer.parseInt(str.substring(6, 10));
-        if (yearNow - yearDOB < 18) {
-            return false;
-        }
-        if (yearNow - yearDOB == 18) {
-            int monthDOB = Integer.parseInt(str.substring(3, 5));
-            if (monthDOB > monthNow) {
-                return false;
-            }
-            if (monthDOB == monthNow) {
-                int dayDOB = Integer.parseInt(str.substring(0, 2));
-                if (dayDOB > dayNow) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+
 }
