@@ -1,14 +1,13 @@
 package controller;
 
+import common.ValidateCustomer;
 import common.WriteAndReadFunc;
 import manager.ManagerCustomer;
 import manager.ManagerService;
+import manager.TuHoSo;
 import model.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class MainController {
     static ManagerService managerService = new ManagerService();
@@ -69,9 +68,23 @@ public class MainController {
         }
         System.out.print("|");
 
-        String str7 = "|\t7. Exit";
+        String str7 = "|\t7. Queue";
         System.out.print("\n" + str7);
         for (int i = str7.length() + 1; i < lengthOfFrame - 2; i++) {
+            System.out.print(" ");
+        }
+        System.out.print("|");
+
+        String str8 = "|\t8. Stack";
+        System.out.print("\n" + str8);
+        for (int i = str8.length() + 1; i < lengthOfFrame - 2; i++) {
+            System.out.print(" ");
+        }
+        System.out.print("|");
+
+        String str9 = "|\t9. Exit";
+        System.out.print("\n" + str9);
+        for (int i = str9.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
         }
         System.out.println("|");
@@ -198,7 +211,7 @@ public class MainController {
         System.out.println("-----Customer List-----");
         int indexOfCustomer; //vị trí của khách hàng trong danh sách hiển thị
         Customer customer = managerCustomer.selectCustomerFromFile();
-        if (customer == null){
+        if (customer == null) {
             return;
         }
         //Chọn loại dịch vụ
@@ -269,13 +282,98 @@ public class MainController {
         writeAndReadFunc.writeToCSVFile(list);
     }
 
-    public static Map<Integer, Employee> showEmployee(){
+    public static Map<Integer, Employee> showEmployee() {
         WriteAndReadFunc writeAndReadFunc = new WriteAndReadFunc();
         Map<Integer, Employee> map = writeAndReadFunc.readEmployeeFile();
         Set<Integer> set = map.keySet();
-        for (Integer value : set){
+        for (Integer value : set) {
             System.out.println(value + ". " + map.get(value).toString());
         }
         return map;
+    }
+
+    public static void tuHoSo() throws InterruptedException {
+        do {
+            Scanner sc = new Scanner(System.in);
+            TuHoSo.showMenu();
+            int chooseFunc;
+            do {
+                try {
+                    chooseFunc = Integer.parseInt(sc.nextLine());
+                    break;
+                } catch (NumberFormatException e) {
+                    System.err.println("---Vui lòng nhập kí tự số---");
+                    Thread.sleep(250);
+                }
+            } while (true);
+            ValidateCustomer validateCustomer = new ValidateCustomer();
+            switch (chooseFunc) {
+                case 1:
+                    TuHoSo.showAllEmployee();
+                    break;
+                case 2:
+                    do {
+                        System.out.print("Tên cần tìm: ");
+                        String name = sc.nextLine();
+                        if (!validateCustomer.validateName(name)) {
+                            System.err.println("---Định dạng tên không hợp lệ---");
+                            Thread.sleep(250);
+                            continue;
+                        }
+                        Stack<Employee> stack = TuHoSo.searchByName(name);
+                        if (stack.empty()) {
+                            System.err.println("---Không tìm thấy yêu cầu---");
+                            Thread.sleep(250);
+                        } else {
+                            TuHoSo.showListEmployee(stack);
+                        }
+                        break;
+                    } while (true);
+                    break;
+                case 3:
+                    do {
+                        try {
+                            System.out.print("Tuổi cần tìm: ");
+                            int age = Integer.parseInt(sc.nextLine());
+                            Stack<Employee> stack = TuHoSo.searchByAge(age);
+                            if (stack.empty()) {
+                                System.err.println("---Không tìm thấy yêu cầu---");
+                                Thread.sleep(250);
+                            } else {
+                                TuHoSo.showListEmployee(stack);
+                            }
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.err.println("---Nhập định dạng là 1 kí tự---");
+                            Thread.sleep(250);
+                        }
+                    } while (true);
+                    break;
+                case 4:
+                    do {
+                        System.out.print("Địa chỉ cần tìm: ");
+                        String address = sc.nextLine();
+                        if (!validateCustomer.validateName(address)) {
+                            System.err.println("---Định dạng địa chỉ không hợp lệ---");
+                            Thread.sleep(250);
+                            continue;
+                        }
+                        Stack<Employee> stack = TuHoSo.searchByAddress(address);
+                        if (stack.empty()) {
+                            System.err.println("---Không tìm thấy yêu cầu---");
+                            Thread.sleep(250);
+                        } else {
+                            TuHoSo.showListEmployee(stack);
+                        }
+                        break;
+                    } while (true);
+                    break;
+                case 5:
+                    return;
+                default:
+                    System.err.println("---Chức năng không có trong danh sách---");
+                    Thread.sleep(250);
+            }
+        } while (true);
     }
 }

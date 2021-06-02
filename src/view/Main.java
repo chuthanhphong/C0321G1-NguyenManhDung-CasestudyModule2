@@ -11,7 +11,9 @@ public class Main {
     static final int SHOW_CUSTOMER = 4;
     static final int ADD_BOOKING = 5;
     static final int SHOW_EMPLOYEE = 6;
-    static final int EXIT = 7;
+    static final int BUY_TICKET = 7;
+    static final int EMPLOYEE_PROFILE = 8;
+    static final int EXIT = 9;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -23,6 +25,8 @@ public class Main {
                 System.out.print("Choose function: ");
                 int chucNang = Integer.parseInt(sc.nextLine());
                 switch (chucNang) {
+                    case EXIT:
+                        System.exit(1);
                     case ADD_SERVICE:
                         MainController.addNewServies();
                         break;
@@ -41,8 +45,11 @@ public class Main {
                     case SHOW_EMPLOYEE:
                         MainController.showEmployee();
                         break;
-                    case EXIT:
-                        System.exit(1);
+                    case BUY_TICKET:
+                        break;
+                    case EMPLOYEE_PROFILE:
+                        MainController.tuHoSo();
+                        break;
                     default:
                         System.err.println("Please choose function in the MENU");
                 }
