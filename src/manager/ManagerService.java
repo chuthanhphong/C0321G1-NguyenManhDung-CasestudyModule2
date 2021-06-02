@@ -468,48 +468,54 @@ public class ManagerService {
     }
 
     //Show all Name Villa Not Duplicate
-    public void showVillasNotDuplicateName() {
-        System.out.println("---Villas Not Duplicate Name---");
+    public TreeSet<String> showVillasNotDuplicateName() {
+        System.out.println("---Danh sách tên các Villa không trùng nhau---");
         List<Villa> list = writeReadFile.readVillasFile();
-        Stack<String> nameVilla = new Stack<>();
-        int i = 1;
+        TreeSet<String> nameVilla = new TreeSet<>();
         for (Villa o : list) {
-            if (!nameVilla.contains(o.getServiceName())) {
-                nameVilla.push(o.getServiceName());
-                System.out.print(i++ + ".\t");
-                o.showInfo();
+            if (!nameVilla.contains(o.getServiceName())){
+                nameVilla.add(o.getServiceName());
             }
         }
+        int i = 1;
+        for (String name : nameVilla){
+            System.out.println("\t" + (i++) + ". " + name);
+        }
+        return nameVilla;
     }
 
     //Show all Name House Not Duplicate
-    public void showHousesNotDuplicateName() {
-        System.out.println("---Houses Not Duplicate Name---");
+    public TreeSet<String> showHousesNotDuplicateName() {
+        System.out.println("---Danh sách tên các House không trùng nhau---");
         List<House> list = writeReadFile.readHousesFile();
-        Stack<String> nameHouse = new Stack<>();
-        int i = 1;
+        TreeSet<String> nameHouse = new TreeSet<>();
         for (House o : list) {
-            if (!nameHouse.contains(o.getServiceName())) {
-                nameHouse.push(o.getServiceName());
-                System.out.print(i++ + ".\t");
-                o.showInfo();
+            if (!nameHouse.contains(o.getServiceName())){
+                nameHouse.add(o.getServiceName());
             }
         }
+        int i = 1;
+        for (String name : nameHouse){
+            System.out.println("\t" + (i++) + ". " + name);
+        }
+        return nameHouse;
     }
 
     //Show all Name Room Not Duplicate
-    public void showRoomsNotDuplicateName() {
-        System.out.println("---Rooms Not Duplicate Name---");
+    public TreeSet<String> showRoomsNotDuplicateName() {
+        System.out.println("---Danh sách tên các Room không trùng nhau---");
         List<Room> list = writeReadFile.readRoomsFile();
-        Stack<String> nameRoom = new Stack<>();
-        int i = 1;
+        TreeSet<String> nameRoom = new TreeSet<>();
         for (Room o : list) {
-            if (!nameRoom.contains(o.getServiceName())) {
-                nameRoom.push(o.getServiceName());
-                System.out.print(i++ + ".\t");
-                o.showInfo();
+            if (!nameRoom.contains(o.getServiceName())){
+                nameRoom.add(o.getServiceName());
             }
         }
+        int i = 1;
+        for (String name : nameRoom){
+            System.out.println("\t" + (i++) + ". " + name);
+        }
+        return nameRoom;
     }
 
     public Villa bookVilla() {
@@ -535,7 +541,7 @@ public class ManagerService {
         return serviceList.get(indexOfService - 1);
     }
 
-    public House bookHouse(){
+    public House bookHouse() {
         Scanner sc = new Scanner(System.in);
         int indexOfService; //vị trí của service muốn book trong danh sách hiển thị
         List<House> serviceList = showHouseToBook();
@@ -558,7 +564,7 @@ public class ManagerService {
         return serviceList.get(indexOfService - 1);
     }
 
-    public Room bookRoom(){
+    public Room bookRoom() {
         Scanner sc = new Scanner(System.in);
         int indexOfService; //vị trí của service muốn book trong danh sách hiển thị
         List<Room> serviceList = showRoomToBook();
@@ -581,7 +587,7 @@ public class ManagerService {
         return serviceList.get(indexOfService - 1);
     }
 
-    public List<Villa> showVillaToBook(){
+    public List<Villa> showVillaToBook() {
         System.out.println("---Danh sách Villas khả dụng---");
         //Map lưu trữ id dịch vụ và id người dùng đã đặt phòng
         Map map = writeReadFile.readBookingCsv();
@@ -596,7 +602,7 @@ public class ManagerService {
         return list;
     }
 
-    public List<House> showHouseToBook(){
+    public List<House> showHouseToBook() {
         System.out.println("---Danh sách Houses khả dụng---");
         //Map lưu trữ id dịch vụ và id người dùng đã đặt phòng
         Map map = writeReadFile.readBookingCsv();
@@ -611,7 +617,7 @@ public class ManagerService {
         return list;
     }
 
-    public List<Room> showRoomToBook(){
+    public List<Room> showRoomToBook() {
         System.out.println("---Danh sách Rooms khả dụng---");
         //Map lưu trữ id dịch vụ và id người dùng đã đặt phòng
         Map map = writeReadFile.readBookingCsv();
