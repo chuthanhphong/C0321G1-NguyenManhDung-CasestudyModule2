@@ -39,7 +39,7 @@ public class Main {
                         MainController.addNewBooking();
                         break;
                     case SHOW_EMPLOYEE:
-
+                        MainController.showEmployee();
                         break;
                     case EXIT:
                         System.exit(1);

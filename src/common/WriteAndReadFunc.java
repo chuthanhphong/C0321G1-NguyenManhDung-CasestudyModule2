@@ -255,4 +255,26 @@ public class WriteAndReadFunc<E> {
         }
         return map;
     }
+
+    public Map<Integer, Employee> readEmployeeFile(){
+        final String PATH = "src/data/employee.csv";
+        Map<Integer, Employee> map = new LinkedHashMap<>();
+        try {
+            FileReader fileReader = new FileReader(PATH);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line = "";
+            int i = 1;
+            while((line = bufferedReader.readLine()) != null){
+                String[] words = line.split("\\|");
+                Employee employee = new Employee(words[0], Integer.parseInt(words[1]), words[2]);
+                map.put(i++, employee);
+            }
+            bufferedReader.close();
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.err.println("---Không tìm thấy file!---");
+        } catch (IOException ioException) {
+            System.err.println("---Lỗi đọc file!---");
+        }
+        return map;
+    }
 }

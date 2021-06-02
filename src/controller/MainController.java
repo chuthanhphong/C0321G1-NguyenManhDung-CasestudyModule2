@@ -6,7 +6,9 @@ import manager.ManagerService;
 import model.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class MainController {
     static ManagerService managerService = new ManagerService();
@@ -267,4 +269,13 @@ public class MainController {
         writeAndReadFunc.writeToCSVFile(list);
     }
 
+    public static Map<Integer, Employee> showEmployee(){
+        WriteAndReadFunc writeAndReadFunc = new WriteAndReadFunc();
+        Map<Integer, Employee> map = writeAndReadFunc.readEmployeeFile();
+        Set<Integer> set = map.keySet();
+        for (Integer value : set){
+            System.out.println(value + ". " + map.get(value).toString());
+        }
+        return map;
+    }
 }
