@@ -12,41 +12,29 @@ import java.util.Map;
 public class WriteAndReadFunc<E> {
 
     //ghi vào file
-    public void writeToCSVFile(E object) {
+    public void writeToCSVFile(List<E> list, boolean status){
         try {
+            if (list.size() == 0) {
+                System.err.println("Danh sách trống");
+                return;
+            }
             String path;
-            if (object instanceof Villa) {
+            if (list.get(0) instanceof Villa) {
                 path = "src/data/villas.csv";
-            } else if (object instanceof House) {
+            } else if (list.get(0) instanceof House) {
                 path = "src/data/houses.csv";
-            } else if (object instanceof Room) {
+            } else if (list.get(0) instanceof Room) {
                 path = "src/data/rooms.csv";
-            } else if (object instanceof Customer) {
+            } else if (list.get(0) instanceof Customer) {
                 path = "src/data/customers.csv";
             } else {
                 System.err.println("Đối tượng phải là kiểu Villa, House, Room hoặc Customer");
                 return;
             }
             //ghi vào file
-            FileWriter fileWriter = new FileWriter(path, true);
+            FileWriter fileWriter = new FileWriter(path, status);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(object.toString() + "\n");
-            bufferedWriter.close();
-            System.out.println("\n---Thêm vào file thành công!---");
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.err.println("File không tồn tại!!!");
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
-
-    public void writeToCSVFile(List<Customer> list){
-        try {
-            String path = "src/data/customers.csv";
-            //ghi vào file
-            FileWriter fileWriter = new FileWriter(path, false);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for (Customer object: list) {
+            for (E object: list) {
                 bufferedWriter.write(object.toString() + "\n");
             }
             bufferedWriter.close();

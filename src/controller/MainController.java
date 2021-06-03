@@ -279,7 +279,7 @@ public class MainController {
                 list.set(list.indexOf(o), customer);
             }
         }
-        writeAndReadFunc.writeToCSVFile(list);
+        writeAndReadFunc.writeToCSVFile(list, false);
     }
 
     public static Map<Integer, Employee> showEmployee() {

@@ -151,7 +151,9 @@ public class ManagerService {
             String addUtilityDescription = sc.nextLine();
 
             Villa addVilla = new Villa(addId, addServiceName, addArea, addPrice, addMaxPeople, addRentType, addRentTime, addTypeOfRoom, addUtilityDescription, addSwimmingPoolArea, addFloors);
-            writeReadFile.writeToCSVFile(addVilla);
+            List<Villa> list = new ArrayList<>();
+            list.add(addVilla);
+            writeReadFile.writeToCSVFile(list, true);
         } catch (NumberFormatException | InterruptedException numberFormatException) {
             System.err.println("LỖI: Kiểm tra định dạng nhập vào!");
         }
@@ -283,7 +285,9 @@ public class ManagerService {
             String addUtilityDescription = sc.nextLine();
 
             House addHouse = new House(addId, addServiceName, addArea, addPrice, addMaxPeople, addRentType, addRentTime, addTypeOfRoom, addUtilityDescription, addFloors);
-            writeReadFile.writeToCSVFile(addHouse);
+            List<House> list = new ArrayList<>();
+            list.add(addHouse);
+            writeReadFile.writeToCSVFile(list, true);
         } catch (NumberFormatException | InterruptedException numberFormatException) {
             System.err.println("LỖI: Kiểm tra định dạng nhập vào!");
         }
@@ -425,7 +429,9 @@ public class ManagerService {
             } while (true);
 
             Room addRoom = new Room(addId, addServiceName, addArea, addPrice, addMaxPeople, addRentType, addRentTime, addEnclosedService, addAmountService, addPriceService);
-            writeReadFile.writeToCSVFile(addRoom);
+            List<Room> list = new ArrayList<>();
+            list.add(addRoom);
+            writeReadFile.writeToCSVFile(list, true);
         } catch (NumberFormatException | InterruptedException numberFormatException) {
             System.err.println("LỖI: Kiểm tra định dạng nhập vào!");
         }
@@ -473,12 +479,12 @@ public class ManagerService {
         List<Villa> list = writeReadFile.readVillasFile();
         TreeSet<String> nameVilla = new TreeSet<>();
         for (Villa o : list) {
-            if (!nameVilla.contains(o.getServiceName())){
+            if (!nameVilla.contains(o.getServiceName())) {
                 nameVilla.add(o.getServiceName());
             }
         }
         int i = 1;
-        for (String name : nameVilla){
+        for (String name : nameVilla) {
             System.out.println("\t" + (i++) + ". " + name);
         }
         return nameVilla;
@@ -490,12 +496,12 @@ public class ManagerService {
         List<House> list = writeReadFile.readHousesFile();
         TreeSet<String> nameHouse = new TreeSet<>();
         for (House o : list) {
-            if (!nameHouse.contains(o.getServiceName())){
+            if (!nameHouse.contains(o.getServiceName())) {
                 nameHouse.add(o.getServiceName());
             }
         }
         int i = 1;
-        for (String name : nameHouse){
+        for (String name : nameHouse) {
             System.out.println("\t" + (i++) + ". " + name);
         }
         return nameHouse;
@@ -507,12 +513,12 @@ public class ManagerService {
         List<Room> list = writeReadFile.readRoomsFile();
         TreeSet<String> nameRoom = new TreeSet<>();
         for (Room o : list) {
-            if (!nameRoom.contains(o.getServiceName())){
+            if (!nameRoom.contains(o.getServiceName())) {
                 nameRoom.add(o.getServiceName());
             }
         }
         int i = 1;
-        for (String name : nameRoom){
+        for (String name : nameRoom) {
             System.out.println("\t" + (i++) + ". " + name);
         }
         return nameRoom;

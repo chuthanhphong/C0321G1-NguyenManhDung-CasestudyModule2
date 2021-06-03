@@ -5,10 +5,7 @@ import common.ValidateCustomer;
 import common.WriteAndReadFunc;
 import model.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class ManagerCustomer {
     ValidateCustomer validateCustomer = new ValidateCustomer();
@@ -55,8 +52,8 @@ public class ManagerCustomer {
             }
             List<Customer> list = writeReadFile.readCustomersFile();
             boolean isContinue = false;
-            for (Customer customer:list){
-                if (customer.getId().equals(id)){
+            for (Customer customer : list) {
+                if (customer.getId().equals(id)) {
                     System.err.println("---Id Card đã tồn tại---");
                     isContinue = true;
                     Thread.sleep(250);
@@ -91,31 +88,33 @@ public class ManagerCustomer {
         do {
             System.out.print("\t\tType of Customer: ");
             typeCustomer = sc.nextLine();
-            if (!validateCustomer.validateTypeOfCustomer(typeCustomer)){
+            if (!validateCustomer.validateTypeOfCustomer(typeCustomer)) {
                 System.err.println("---Kiểu khách hàng là 1 trong các loại: Diamond, Platinium, Gold, Silver, Member---");
                 Thread.sleep(250);
                 continue;
             }
             break;
-        }while (true);
+        } while (true);
         System.out.print("\t\tAddress: ");
         address = sc.nextLine();
         Customer customer = new Customer(name, dateOfBirth, gender, id, phoneNumber, email, typeCustomer, address);
-        writeReadFile.writeToCSVFile(customer);
+        List<Customer> list = new ArrayList<>();
+        list.add(customer);
+        writeReadFile.writeToCSVFile(list, true);
     }
 
     public List<Customer> showInforAllCustomer() {
         List<Customer> list = writeReadFile.readCustomersFile();
         //Sắp xếp danh sách Customer
         Collections.sort(list, new NameCustomerComparator());
-        for (int i=0; i<list.size()-1; i++) {
-            for (int j=i+1; j<list.size(); j++) {
-                if (list.get(i).getName().equals(list.get(j).getName())){
-                    if (list.get(i).compareDateOfBirthAcsending(list.get(j)) == 1){
-                        Collections.swap(list,i,j);
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(i).getName().equals(list.get(j).getName())) {
+                    if (list.get(i).compareDateOfBirthAcsending(list.get(j)) == 1) {
+                        Collections.swap(list, i, j);
                     }
-                }else {
-                    i = j-1;
+                } else {
+                    i = j - 1;
                     break;
                 }
             }
@@ -139,20 +138,20 @@ public class ManagerCustomer {
         Map map = writeReadFile.readBookingCsv();
         //không hiển thị các Customer đã book phòng
         customerList.removeIf(o -> map.containsValue(o.getId()));
-        if (customerList.size() == 0){
+        if (customerList.size() == 0) {
             System.err.println("---Không còn Customer nào khả dụng---");
             Thread.sleep(250);
             return null;
-        }else {
+        } else {
             Collections.sort(customerList, new NameCustomerComparator());
-            for (int i=0; i<customerList.size()-1; i++) {
-                for (int j=i+1; j<customerList.size(); j++) {
-                    if (customerList.get(i).getName().equals(customerList.get(j).getName())){
-                        if (customerList.get(i).compareDateOfBirthAcsending(customerList.get(j)) == 1){
-                            Collections.swap(customerList,i,j);
+            for (int i = 0; i < customerList.size() - 1; i++) {
+                for (int j = i + 1; j < customerList.size(); j++) {
+                    if (customerList.get(i).getName().equals(customerList.get(j).getName())) {
+                        if (customerList.get(i).compareDateOfBirthAcsending(customerList.get(j)) == 1) {
+                            Collections.swap(customerList, i, j);
                         }
-                    }else {
-                        i = j-1;
+                    } else {
+                        i = j - 1;
                         break;
                     }
                 }
@@ -178,7 +177,7 @@ public class ManagerCustomer {
                 return customerList.get(indexOfCustomer - 1);
             } catch (NumberFormatException | InterruptedException e) {
                 System.err.println("---Nhập đúng định dạng là 1 số---");
-            }catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.err.println("---Vui lòng chọn trong danh sách---");
             }
         } while (true);
