@@ -26,6 +26,13 @@ public class MainController {
                 System.out.print("-");
             }
         }
+        String str0 = "|\t0. Exit";
+        System.out.print("\n" + str0);
+        for (int i = str0.length() + 1; i < lengthOfFrame - 2; i++) {
+            System.out.print(" ");
+        }
+        System.out.print("|");
+
         String str1 = "|\t1. Add New Services";
         System.out.print("\n" + str1);
         for (int i = str1.length() + 1; i < lengthOfFrame - 2; i++) {
@@ -47,42 +54,42 @@ public class MainController {
         }
         System.out.print("|");
 
-        String str4 = "|\t4. Show Information of Customer";
+        String str4 = "|\t4. Update Customer";
         System.out.print("\n" + str4);
         for (int i = str4.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
         }
         System.out.print("|");
 
-        String str5 = "|\t5. Add New Booking";
+        String str5 = "|\t5. Delete Customer";
         System.out.print("\n" + str5);
         for (int i = str5.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
         }
         System.out.print("|");
 
-        String str6 = "|\t6. Show Information of Employee";
+        String str6 = "|\t6. Show Information of Customer";
         System.out.print("\n" + str6);
         for (int i = str6.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
         }
         System.out.print("|");
 
-        String str7 = "|\t7. Queue";
+        String str7 = "|\t7. Add New Booking";
         System.out.print("\n" + str7);
         for (int i = str7.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
         }
         System.out.print("|");
 
-        String str8 = "|\t8. Stack";
+        String str8 = "|\t8. Show Information of Employee";
         System.out.print("\n" + str8);
         for (int i = str8.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
         }
         System.out.print("|");
 
-        String str9 = "|\t9. Exit";
+        String str9 = "|\t9. Stack";
         System.out.print("\n" + str9);
         for (int i = str9.length() + 1; i < lengthOfFrame - 2; i++) {
             System.out.print(" ");
@@ -375,5 +382,21 @@ public class MainController {
                     Thread.sleep(250);
             }
         } while (true);
+    }
+
+    public static void updateCustomer(){
+        try {
+            managerCustomer.updateCustomer();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteCustomer() {
+        try {
+            managerCustomer.deleteCustomer();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

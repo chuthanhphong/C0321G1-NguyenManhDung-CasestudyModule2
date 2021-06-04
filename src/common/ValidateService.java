@@ -1,6 +1,5 @@
 package common;
 
-import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class ValidateService {
@@ -71,6 +70,4 @@ public class ValidateService {
         String regex = "^\\p{Lu}\\p{Ll}*(\\s(\\p{Lu}\\p{Ll}*|\\d*))*$";
         return Pattern.matches(regex, str);
     }
-
-
 }

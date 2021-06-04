@@ -183,4 +183,126 @@ public class ManagerCustomer {
         } while (true);
 
     }
+
+    public void updateCustomer() throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+        //hiển thị list toàn bộ customer
+        System.out.println("---UPDATE CUSTOMER---");
+        List<Customer> customerList = showInforAllCustomer();
+        //chọn customer trong list để update
+        int indexOfCustomer = -1;
+        do {
+            try {
+                System.out.println("\nChoose the customer: ");
+                indexOfCustomer = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.err.println("Nhập định dạng số");
+                Thread.sleep(250);
+            }
+        } while (indexOfCustomer <= 0 || indexOfCustomer > customerList.size());
+
+        //hiển thị thông tin customer dc chọn
+        System.out.println("---Thông tin Customer cần update---");
+        Customer updateCustomer = customerList.get(indexOfCustomer - 1);
+        updateCustomer.showInfo();
+
+        //hiển thị menu các thuộc tính để lựa chọn chỉnh sửa
+        System.out.println("Menu chỉnh sửa:");
+        System.out.println("\t1. Name");
+        System.out.println("\t2. Gender");
+        System.out.println("\t3. PhoneNumber");
+        System.out.println("\t4. Done!");
+        int indexOfAttribute = -1;
+        do {
+            try {
+                System.out.println("\nChoose the attribute: ");
+                indexOfAttribute = Integer.parseInt(sc.nextLine());
+                switch (indexOfAttribute) {
+                    case 1:
+                        do {
+                            System.out.print(updateCustomer.getName() + " -> ");
+                            String updateName = sc.nextLine();
+                            if (!validateCustomer.validateName(updateName)) {
+                                System.err.println("Name không hợp lệ");
+                                continue;
+                            }
+                            updateCustomer.setName(updateName);
+                            break;
+                        } while (true);
+                        break;
+                    case 2:
+                        do {
+                            System.out.print(updateCustomer.getGender() + " -> ");
+                            String updateGender = sc.nextLine();
+                            if (!validateCustomer.validateGender(updateGender)) {
+                                System.err.println("Gender không hợp lệ");
+                                continue;
+                            }
+                            updateCustomer.setGender(updateGender);
+                            break;
+                        } while (true);
+                        break;
+                    case 3:
+                        do {
+                            System.out.print(updateCustomer.getPhoneNumber() + " -> ");
+                            String updatePhoneNumber = sc.nextLine();
+                            if (!validateCustomer.validatePhoneNumber(updatePhoneNumber)) {
+                                System.err.println("PhoneNumber không hợp lệ");
+                                continue;
+                            }
+                            updateCustomer.setPhoneNumber(updatePhoneNumber);
+                            break;
+                        } while (true);
+                        break;
+                    default:
+                        System.out.println("Vui lòng chọn lại");
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Nhập định dạng số");
+                Thread.sleep(250);
+            }
+        } while (indexOfAttribute != 4);
+        writeReadFile.writeToCSVFile(customerList, false);
+        System.out.println("UPDATE THÀNH CÔNG");
+    }
+
+    public void deleteCustomer() throws InterruptedException {
+        Scanner sc = new Scanner(System.in);
+        List<Customer> list = showInforAllCustomer();
+        int index = -1;
+        do {
+            try {
+                System.out.print("Chọn Customer: ");
+                index = Integer.parseInt(sc.nextLine());
+                if (index > 0 && index <= list.size()){
+                    break;
+                }
+                System.err.println("Không tồn tại khách hàng vừa chọn");
+                Thread.sleep(250);
+            } catch (NumberFormatException e) {
+                System.err.println("Vui lòng nhập định dạng số");
+                Thread.sleep(250);
+            }
+        } while (true);
+
+        System.out.println();
+        list.get(index-1).showInfo();
+        do {
+            System.out.print("Xác nhận xóa: Y/N\t");
+            String confirmDel = sc.nextLine();
+            if (confirmDel.equals("Y")) {
+                list.remove(index - 1);
+                writeReadFile.writeToCSVFile(list, false);
+                System.out.println("Xóa thành công!");
+                return;
+            } else {
+                if (confirmDel.equals("N")) {
+                    return;
+                }else {
+                    System.err.println("Nhập Y hoặc N!");
+                    Thread.sleep(250);
+                }
+            }
+        }while (true);
+    }
 }
